@@ -5,7 +5,11 @@ class Settings():
     DB_PORT: str = "PORT"
     DB_NAME: str = "DBNAME"
 
-    DB_URL: str = f'postgresql+asyncpg://{DB_USER}:{DB_PASSWORD}@{DB_HOST}:{DB_PORT}/{DB_NAME}'
+    bot_token: str = ""
 
-
-settings = Settings()
+    def get_db_url(self): 
+        DB_URL: str = f'postgresql+asyncpg://{self.DB_USER}:{self.DB_PASSWORD}@{self.DB_HOST}:{self.DB_PORT}/{self.DB_NAME}'
+        return DB_URL
+    
+    def get_bot_token(self):
+        return self.bot_token
