@@ -1,7 +1,6 @@
 from sqlalchemy import select, text
 from sqlalchemy.ext.asyncio import AsyncSession
 from src.models.base_model import BaseModel
-from src.schemas.base_schema import BaseSchema
 
 class BaseRepository:
 
@@ -9,9 +8,8 @@ class BaseRepository:
         self.session = session
         self.model = model
 
-    async def create(self, instance_data: BaseSchema) -> BaseModel:
-        data = instance_data.model_dump()
-        instance_new = self.model(**data)
+    async def create(self, instance_data) -> BaseModel:
+        instance_new = self.model(**instance_data)
         self.session.add(instance_new)
         await self.session.flush()
         await self.session.commit()
