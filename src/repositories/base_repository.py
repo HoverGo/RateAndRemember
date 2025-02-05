@@ -9,7 +9,7 @@ class BaseRepository:
         self.session = session
         self.model = model
 
-    async def create(self, instance_data: BaseSchema) -> BaseSchema:
+    async def create(self, instance_data: BaseSchema) -> BaseModel:
         data = instance_data.model_dump()
         instance_new = self.model(**data)
         self.session.add(instance_new)
@@ -17,7 +17,7 @@ class BaseRepository:
         await self.session.commit()
         return instance_new
     
-    async def get_one(self, **filters) -> BaseSchema:
+    async def get_one(self, **filters) -> BaseModel:
         query = select(self.model).filter_by(**filters)
         result = self.session.execute(query)
         instance = result.scalar_one_or_none()
@@ -28,7 +28,7 @@ class BaseRepository:
             order: str = 'id',
             limit: int = 10,
             offset: int = 0
-            ) -> list[BaseSchema]:
+            ) -> list[BaseModel]:
         query = select(self.model).order_by(text(order)).offset(offset).limit(limit)
         result = self.session.execute(query)
         instances = result.scalars().all()
