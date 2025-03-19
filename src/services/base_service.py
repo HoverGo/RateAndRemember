@@ -1,14 +1,14 @@
 from sqlalchemy.ext.asyncio import AsyncSession
-from src.repositories.base_repository import BaseRepository
-from src.models.base_model import BaseModel
+from repositories.base_repository import BaseRepository
+from models.base_model import BaseModel
 
 
 class BaseService():
 
     def __init__(self, session: AsyncSession, repository: BaseRepository, model: BaseModel) -> None:
-        self.repository = repository
+        self.repository = repository(session, model)
 
-    async def create(self, instance_data) -> BaseModel:
+    async def create(self, **instance_data) -> BaseModel:
         instance = await self.repository.create(instance_data=instance_data)
         return instance
     

@@ -1,6 +1,6 @@
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 from sqlalchemy import ForeignKey, BigInteger
-from base_model import BaseModel
+from models.base_model import BaseModel
 from typing import Optional
 
 
@@ -24,11 +24,11 @@ class Categories(BaseModel):
 
 
 class Products(BaseModel):
-    __tablename__ = 'product'
+    __tablename__ = 'products'
 
     id: Mapped[int] = mapped_column(primary_key=True, autoincrement=True)
-    user_id: Mapped[int] = mapped_column(ForeignKey('user.id'))
-    category_id: Mapped[int] = mapped_column(ForeignKey('category.id'))
+    user_id: Mapped[int] = mapped_column(ForeignKey('users.id'))
+    category_id: Mapped[int] = mapped_column(ForeignKey('categories.id'))
     name: Mapped[str]
     description: Mapped[Optional[str]]
     rate: Mapped[float]
